@@ -1,49 +1,43 @@
-name: the_gorgeous_login
-description: Gorgeous Login UI
-
-version: 1.0.0+1
-
-environment:
-  sdk: ">=2.0.0-dev.68.0 <3.0.0"
-
 dependencies:
-  flutter_credit_card: 0.1.0
-  flutter_colorpicker: any
+  camera:
+  cupertino_icons: ^0.1.2
   flutter:
     sdk: flutter
-  camera:
+  flutter_credit_card: 0.1.0
+  flutter_colorpicker: 0.3.4
   image_picker:
-  path_provider:
-  path:
   loading: ^1.0.1
+  path:
+  path_provider:
 
-
-  cupertino_icons: ^0.1.2
+description: Gorgeous Login UI
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-
   font_awesome_flutter: ^8.0.1
 
+environment:
+  flutter: ">=1.5.4 <2.0.0"
+  sdk: ">=2.3.0 <3.0.0"
+
 flutter:
-
-  uses-material-design: true
-
   assets:
-      - assets/login_logo.png
-      - assets/shoes.png
-      - assets/ocean_shoe.png
-
+    - assets/login_logo.png
+    - assets/img/shoes.png
+    - assets/img/ocean_shoe.png
   fonts:
     - family: WorkSansSemiBold
       fonts:
         - asset: assets/fonts/Work_Sans/WorkSans-SemiBold.ttf
-
     - family: WorkSansBold
       fonts:
         - asset: assets/fonts/Work_Sans/WorkSans-Bold.ttf
-
     - family: WorkSansMedium
       fonts:
         - asset: assets/fonts/Work_Sans/WorkSans-Medium.ttf
+  uses-material-design: true
+
+name: smart_sneaks_demo
+
+version: 1.0.0+1
