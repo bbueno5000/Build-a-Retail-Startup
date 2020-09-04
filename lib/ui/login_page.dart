@@ -1,39 +1,29 @@
-import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter/foundation.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:the_gorgeous_login/style/theme.dart' as Theme;
-import 'package:the_gorgeous_login/utils/bubble_indication_painter.dart';
-
-import 'package:flutter_colorpicker/flutter_colorpicker.dart';
-import 'package:flutter_colorpicker/material_picker.dart';
-import 'package:flutter_colorpicker/block_picker.dart';
-import 'package:flutter_colorpicker/utils.dart';
-import 'package:camera/camera.dart';
-import 'package:image_picker/image_picker.dart';
 import 'dart:async';
 import 'dart:io';
-import 'package:loading/indicator/ball_pulse_indicator.dart';
+import 'package:flutter_colorpicker/flutter_colorpicker.dart';
+import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:loading/loading.dart';
-import 'package:flutter_credit_card/flutter_credit_card.dart';
-
-
+import 'package:loading/indicator/ball_pulse_indicator.dart';
+import 'package:smart_sneaks_demo/style/theme.dart' as Theme;
+import 'package:smart_sneaks_demo/utils/bubble_indication_painter.dart';
 
 class LoginPage extends StatefulWidget {
+
   LoginPage({Key key}) : super(key: key);
 
   @override
   _LoginPageState createState() => new _LoginPageState();
 }
 
-class _LoginPageState extends State<LoginPage>
-    with SingleTickerProviderStateMixin {
+class _LoginPageState extends State<LoginPage> with SingleTickerProviderStateMixin {
 
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
-
   final FocusNode myFocusNodeEmailLogin = FocusNode();
   final FocusNode myFocusNodePasswordLogin = FocusNode();
-
   final FocusNode myFocusNodePassword = FocusNode();
   final FocusNode myFocusNodeEmail = FocusNode();
   final FocusNode myFocusNodeName = FocusNode();
@@ -43,13 +33,11 @@ class _LoginPageState extends State<LoginPage>
 
   bool _obscureTextLogin = true;
   bool _obscureTextSignup = true;
-  bool _obscureTextSignupConfirm = true;
 
   TextEditingController signupEmailController = new TextEditingController();
   TextEditingController signupNameController = new TextEditingController();
   TextEditingController signupPasswordController = new TextEditingController();
-  TextEditingController signupConfirmPasswordController =
-      new TextEditingController();
+  TextEditingController signupConfirmPasswordController = new TextEditingController();
 
   PageController _pageController;
 
@@ -61,86 +49,87 @@ class _LoginPageState extends State<LoginPage>
     return new Scaffold(
       key: _scaffoldKey,
       body: NotificationListener<OverscrollIndicatorNotification>(
-        onNotification: (overscroll) {
-          overscroll.disallowGlow();
-        },
+        onNotification: (overscroll) {overscroll.disallowGlow();},
         child: SingleChildScrollView(
-              child: Container(
-                width: MediaQuery.of(context).size.width,
-                height: MediaQuery.of(context).size.height >= 775.0
-                    ? MediaQuery.of(context).size.height
-                    : 775.0,
-                decoration: new BoxDecoration(
-                  gradient: new LinearGradient(
-                      colors: [
-                        Theme.Colors.loginGradientStart,
-                        Theme.Colors.loginGradientEnd
-                      ],
-                      begin: const FractionalOffset(0.0, 0.0),
-                      end: const FractionalOffset(1.0, 1.0),
-                      stops: [0.0, 1.0],
-                      tileMode: TileMode.clamp),
-                ),
-                child: Column(
-                  mainAxisSize: MainAxisSize.max,
-                  children: <Widget>[
-                    Padding(
-                      padding: EdgeInsets.only(top: 75.0),
-                      child: new Image(
-                          width: 250.0,
-                          height: 191.0,
-                          fit: BoxFit.fill,
-                          image: new AssetImage('assets/img/login_logo.png')),
-                    ),
-                    Padding(
-                      padding: EdgeInsets.only(top: 0.0),
-                      child: FlatButton(
-                          onPressed: () {},
-                          child: Text(
-                            "SmartSneaks",
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 50.0,
-                                fontFamily: "Roboto"),
-                          )),
-                    ),
-                    Padding(
-                      padding: EdgeInsets.only(top: 20.0),
-                      child: _buildMenuBar(context),
-                    ),
-                    Expanded(
-                      flex: 2,
-                      child: PageView(
-                        controller: _pageController,
-                        onPageChanged: (i) {
-                          if (i == 0) {
-                            setState(() {
-                              right = Colors.white;
-                              left = Colors.black;
-                            });
-                          } else if (i == 1) {
-                            setState(() {
-                              right = Colors.black;
-                              left = Colors.white;
-                            });
-                          }
-                        },
-                        children: <Widget>[
-                          new ConstrainedBox(
-                            constraints: const BoxConstraints.expand(),
-                            child: _buildSignIn(context),
-                          ),
-                          new ConstrainedBox(
-                            constraints: const BoxConstraints.expand(),
-                            child: _buildSignUp(context),
-                          ),
-                        ],
-                      ),
-                    ),
+          child: Container(
+            width: MediaQuery.of(context).size.width,
+            height: MediaQuery.of(context).size.height >= 775.0
+                ? MediaQuery.of(context).size.height : 775.0,
+            decoration: new BoxDecoration(
+              gradient: new LinearGradient(
+                  colors: [
+                    Theme.Colors.loginGradientStart,
+                    Theme.Colors.loginGradientEnd
                   ],
-                ),
+                  begin: const FractionalOffset(0.0, 0.0),
+                  end: const FractionalOffset(1.0, 1.0),
+                  stops: [0.0, 1.0],
+                  tileMode: TileMode.clamp
               ),
             ),
+            child: Column(
+              mainAxisSize: MainAxisSize.max,
+              children: <Widget>[
+                Padding(
+                  padding: EdgeInsets.only(top: 75.0),
+                  child: new Image(
+                      width: 250.0,
+                      height: 191.0,
+                      fit: BoxFit.fill,
+                      image: new AssetImage('assets/img/login_logo.png'),
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsets.only(top: 0.0),
+                  child: FlatButton(
+                      onPressed: () {},
+                      child: Text(
+                        "SmartSneaks",
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 50.0,
+                            fontFamily: "Roboto"
+                        ),
+                      ),
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsets.only(top: 20.0),
+                  child: _buildMenuBar(context),
+                ),
+                Expanded(
+                  flex: 2,
+                  child: PageView(
+                    controller: _pageController,
+                    onPageChanged: (i) {
+                      if (i == 0) {
+                        setState(() {
+                          right = Colors.white;
+                          left = Colors.black;
+                        });
+                      }
+                      else if (i == 1) {
+                        setState(() {
+                          right = Colors.black;
+                          left = Colors.white;
+                        });
+                      }},
+                    children: <Widget>[
+                      new ConstrainedBox(
+                        constraints: const BoxConstraints.expand(),
+                        child: _buildSignIn(context),
+                      ),
+                      new ConstrainedBox(
+                        constraints: const BoxConstraints.expand(),
+                        child: _buildSignUp(context),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
       ),
     );
   }
@@ -157,30 +146,31 @@ class _LoginPageState extends State<LoginPage>
   @override
   void initState() {
     super.initState();
-
     SystemChrome.setPreferredOrientations([
       DeviceOrientation.portraitUp,
       DeviceOrientation.portraitDown,
     ]);
-
     _pageController = PageController();
   }
 
   void showInSnackBar(String value) {
     FocusScope.of(context).requestFocus(new FocusNode());
     _scaffoldKey.currentState?.removeCurrentSnackBar();
-    _scaffoldKey.currentState.showSnackBar(new SnackBar(
-      content: new Text(
-        value,
-        textAlign: TextAlign.center,
-        style: TextStyle(
-            color: Colors.white,
-            fontSize: 16.0,
-            fontFamily: "WorkSansSemiBold"),
-      ),
-      backgroundColor: Colors.blue,
-      duration: Duration(seconds: 3),
-    ));
+    _scaffoldKey.currentState.showSnackBar(
+        new SnackBar(
+          content: new Text(
+            value,
+            textAlign: TextAlign.center,
+            style: TextStyle(
+                color: Colors.white,
+                fontSize: 16.0,
+                fontFamily: "WorkSansSemiBold",
+            ),
+          ),
+          backgroundColor: Colors.blue,
+          duration: Duration(seconds: 3),
+        ),
+    );
   }
 
   Widget _buildMenuBar(BuildContext context) {
@@ -206,11 +196,11 @@ class _LoginPageState extends State<LoginPage>
                   style: TextStyle(
                       color: left,
                       fontSize: 16.0,
-                      fontFamily: "WorkSansSemiBold"),
+                      fontFamily: "WorkSansSemiBold"
+                  ),
                 ),
               ),
             ),
-            //Container(height: 33.0, width: 1.0, color: Colors.white),
             Expanded(
               child: FlatButton(
                 splashColor: Colors.transparent,
@@ -221,7 +211,8 @@ class _LoginPageState extends State<LoginPage>
                   style: TextStyle(
                       color: right,
                       fontSize: 16.0,
-                      fontFamily: "WorkSansSemiBold"),
+                      fontFamily: "WorkSansSemiBold",
+                  ),
                 ),
               ),
             ),
@@ -253,7 +244,11 @@ class _LoginPageState extends State<LoginPage>
                     children: <Widget>[
                       Padding(
                         padding: EdgeInsets.only(
-                            top: 20.0, bottom: 20.0, left: 25.0, right: 25.0),
+                            top: 20.0,
+                            bottom: 20.0,
+                            left: 25.0,
+                            right: 25.0,
+                        ),
                         child: TextField(
                           focusNode: myFocusNodeEmailLogin,
                           controller: loginEmailController,
@@ -261,7 +256,8 @@ class _LoginPageState extends State<LoginPage>
                           style: TextStyle(
                               fontFamily: "WorkSansSemiBold",
                               fontSize: 16.0,
-                              color: Colors.black),
+                              color: Colors.black,
+                          ),
                           decoration: InputDecoration(
                             border: InputBorder.none,
                             icon: Icon(
@@ -271,7 +267,9 @@ class _LoginPageState extends State<LoginPage>
                             ),
                             hintText: "Email Address",
                             hintStyle: TextStyle(
-                                fontFamily: "WorkSansSemiBold", fontSize: 17.0),
+                                fontFamily: "WorkSansSemiBold",
+                                fontSize: 17.0,
+                            ),
                           ),
                         ),
                       ),
@@ -282,7 +280,11 @@ class _LoginPageState extends State<LoginPage>
                       ),
                       Padding(
                         padding: EdgeInsets.only(
-                            top: 20.0, bottom: 20.0, left: 25.0, right: 25.0),
+                            top: 20.0,
+                            bottom: 20.0,
+                            left: 25.0,
+                            right: 25.0,
+                        ),
                         child: TextField(
                           focusNode: myFocusNodePasswordLogin,
                           controller: loginPasswordController,
@@ -290,7 +292,8 @@ class _LoginPageState extends State<LoginPage>
                           style: TextStyle(
                               fontFamily: "WorkSansSemiBold",
                               fontSize: 16.0,
-                              color: Colors.black),
+                              color: Colors.black,
+                          ),
                           decoration: InputDecoration(
                             border: InputBorder.none,
                             icon: Icon(
@@ -300,7 +303,9 @@ class _LoginPageState extends State<LoginPage>
                             ),
                             hintText: "Password",
                             hintStyle: TextStyle(
-                                fontFamily: "WorkSansSemiBold", fontSize: 17.0),
+                                fontFamily: "WorkSansSemiBold",
+                                fontSize: 17.0,
+                            ),
                             suffixIcon: GestureDetector(
                               onTap: _toggleLogin,
                               child: Icon(
@@ -342,32 +347,33 @@ class _LoginPageState extends State<LoginPage>
                       begin: const FractionalOffset(0.2, 0.2),
                       end: const FractionalOffset(1.0, 1.0),
                       stops: [0.0, 1.0],
-                      tileMode: TileMode.clamp),
+                      tileMode: TileMode.clamp,
+                  ),
                 ),
                 child: MaterialButton(
                     highlightColor: Colors.transparent,
                     splashColor: Theme.Colors.loginGradientEnd,
-                    //shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(5.0))),
                     child: Padding(
                       padding: const EdgeInsets.symmetric(
-                          vertical: 10.0, horizontal: 42.0),
+                          vertical: 10.0,
+                          horizontal: 42.0,
+                      ),
                       child: Text(
                         "LOGIN",
                         style: TextStyle(
                             color: Colors.white,
                             fontSize: 25.0,
-                            fontFamily: "WorkSansBold"),
+                            fontFamily: "WorkSansBold",
+                        ),
                       ),
                     ),
                     onPressed: () =>
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => Selection()),
-                        )),
-
-
-
+                              builder: (context) => Selection(),
+                          )),
+                ),
               ),
             ],
           ),
@@ -381,20 +387,18 @@ class _LoginPageState extends State<LoginPage>
                       decoration: TextDecoration.underline,
                       color: Colors.white,
                       fontSize: 16.0,
-                      fontFamily: "WorkSansMedium"),
-                )),
+                      fontFamily: "WorkSansMedium",
+                  ),
+                ),
+            ),
           ),
           Padding(
             padding: EdgeInsets.only(top: 10.0),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-
-
-              ],
+              children: <Widget>[],
             ),
           ),
-
         ],
       ),
     );
@@ -422,7 +426,11 @@ class _LoginPageState extends State<LoginPage>
                     children: <Widget>[
                       Padding(
                         padding: EdgeInsets.only(
-                            top: 20.0, bottom: 20.0, left: 25.0, right: 25.0),
+                            top: 20.0,
+                            bottom: 20.0,
+                            left: 25.0,
+                            right: 25.0,
+                        ),
                         child: TextField(
                           focusNode: myFocusNodeName,
                           controller: signupNameController,
@@ -431,7 +439,8 @@ class _LoginPageState extends State<LoginPage>
                           style: TextStyle(
                               fontFamily: "WorkSansSemiBold",
                               fontSize: 16.0,
-                              color: Colors.black),
+                              color: Colors.black,
+                          ),
                           decoration: InputDecoration(
                             border: InputBorder.none,
                             icon: Icon(
@@ -440,7 +449,9 @@ class _LoginPageState extends State<LoginPage>
                             ),
                             hintText: "Name",
                             hintStyle: TextStyle(
-                                fontFamily: "WorkSansSemiBold", fontSize: 16.0),
+                                fontFamily: "WorkSansSemiBold",
+                                fontSize: 16.0,
+                            ),
                           ),
                         ),
                       ),
@@ -451,7 +462,11 @@ class _LoginPageState extends State<LoginPage>
                       ),
                       Padding(
                         padding: EdgeInsets.only(
-                            top: 20.0, bottom: 20.0, left: 25.0, right: 25.0),
+                            top: 20.0,
+                            bottom: 20.0,
+                            left: 25.0,
+                            right: 25.0,
+                        ),
                         child: TextField(
                           focusNode: myFocusNodeEmail,
                           controller: signupEmailController,
@@ -459,7 +474,8 @@ class _LoginPageState extends State<LoginPage>
                           style: TextStyle(
                               fontFamily: "WorkSansSemiBold",
                               fontSize: 16.0,
-                              color: Colors.black),
+                              color: Colors.black,
+                          ),
                           decoration: InputDecoration(
                             border: InputBorder.none,
                             icon: Icon(
@@ -468,7 +484,9 @@ class _LoginPageState extends State<LoginPage>
                             ),
                             hintText: "Email Address",
                             hintStyle: TextStyle(
-                                fontFamily: "WorkSansSemiBold", fontSize: 16.0),
+                                fontFamily: "WorkSansSemiBold",
+                                fontSize: 16.0,
+                            ),
                           ),
                         ),
                       ),
@@ -479,7 +497,11 @@ class _LoginPageState extends State<LoginPage>
                       ),
                       Padding(
                         padding: EdgeInsets.only(
-                            top: 20.0, bottom: 20.0, left: 25.0, right: 25.0),
+                            top: 20.0,
+                            bottom: 20.0,
+                            left: 25.0,
+                            right: 25.0,
+                        ),
                         child: TextField(
                           focusNode: myFocusNodePassword,
                           controller: signupPasswordController,
@@ -487,7 +509,8 @@ class _LoginPageState extends State<LoginPage>
                           style: TextStyle(
                               fontFamily: "WorkSansSemiBold",
                               fontSize: 16.0,
-                              color: Colors.black),
+                              color: Colors.black,
+                          ),
                           decoration: InputDecoration(
                             border: InputBorder.none,
                             icon: Icon(
@@ -496,7 +519,9 @@ class _LoginPageState extends State<LoginPage>
                             ),
                             hintText: "Password",
                             hintStyle: TextStyle(
-                                fontFamily: "WorkSansSemiBold", fontSize: 16.0),
+                                fontFamily: "WorkSansSemiBold",
+                                fontSize: 16.0,
+                            ),
                             suffixIcon: GestureDetector(
                               onTap: _toggleSignup,
                               child: Icon(
@@ -510,7 +535,6 @@ class _LoginPageState extends State<LoginPage>
                           ),
                         ),
                       ),
-
                     ],
                   ),
                 ),
@@ -539,25 +563,29 @@ class _LoginPageState extends State<LoginPage>
                       begin: const FractionalOffset(0.2, 0.2),
                       end: const FractionalOffset(1.0, 1.0),
                       stops: [0.0, 1.0],
-                      tileMode: TileMode.clamp),
+                      tileMode: TileMode.clamp,
+                  ),
                 ),
                 child: MaterialButton(
                     highlightColor: Colors.transparent,
                     splashColor: Theme.Colors.loginGradientEnd,
-                    //shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(5.0))),
                     child: Padding(
                       padding: const EdgeInsets.symmetric(
-                          vertical: 10.0, horizontal: 42.0),
+                          vertical: 10.0,
+                          horizontal: 42.0,
+                      ),
                       child: Text(
                         "SIGN UP",
                         style: TextStyle(
                             color: Colors.white,
                             fontSize: 25.0,
-                            fontFamily: "WorkSansBold"),
+                            fontFamily: "WorkSansBold",
+                        ),
                       ),
                     ),
                     onPressed: () =>
-                        showInSnackBar("SignUp button pressed")),
+                        showInSnackBar("SignUp button pressed"),
+                ),
               ),
             ],
           ),
@@ -587,33 +615,17 @@ class _LoginPageState extends State<LoginPage>
       _obscureTextSignup = !_obscureTextSignup;
     });
   }
-
-  void _toggleSignupConfirm() {
-    setState(() {
-      _obscureTextSignupConfirm = !_obscureTextSignupConfirm;
-    });
-  }
 }
 
-
-
-
 class Selection extends StatelessWidget {
-  @override
 
-  // create some values
-  Color pickerColor = Color(0xff443a49);
-  Color currentColor = Color(0xff443a49);
+  final Color pickerColor = Color(0xff443a49);
+  final Color currentColor = Color(0xff443a49);
 
-// ValueChanged<Color> callback
-  void changeColor(Color color) {
-  }
-
-
+  void changeColor(Color color) {}
 
   Widget build(BuildContext context) {
     final title = 'Basic List';
-
     return MaterialApp(
       title: title,
       home: Scaffold(
@@ -624,9 +636,7 @@ class Selection extends StatelessWidget {
           children: <Widget>[
             ListTile(
               leading: Icon(Icons.map),
-              onTap: () {
-                  Navigator.pop(context);
-              },
+              onTap: () {Navigator.pop(context);},
               title: Text('How do you want to design your SmartSneak?'),
             ),
             ListTile(
@@ -648,14 +658,11 @@ class Selection extends StatelessWidget {
                                   padding: EdgeInsets.all(8.0),
                                   child: TextFormField(),
                                 ),
-
                                 Padding(
                                   padding: const EdgeInsets.all(8.0),
                                   child: RaisedButton(
                                     child: Text("Submit"),
-                                    onPressed: () {
-
-                                    },
+                                    onPressed: () {},
                                   ),
                                 )
                               ],
@@ -663,7 +670,6 @@ class Selection extends StatelessWidget {
                           ),
                         );
                       });
-
               },
               title: Text('Music'),
             ),
@@ -678,30 +684,15 @@ class Selection extends StatelessWidget {
                       child: ColorPicker(
                         pickerColor: pickerColor,
                         onColorChanged: changeColor,
-                        enableLabel: true,
                         pickerAreaHeightPercent: 0.8,
                       ),
-                      // Use Material color picker:
-                      //
-                      // child: MaterialPicker(
-                      //   pickerColor: pickerColor,
-                      //   onColorChanged: changeColor,
-                      //   enableLabel: true, // only on portrait mode
-                      // ),
-                      //
-                      // Use Block color picker:
-                      //
-                      // child: BlockPicker(
-                      //   pickerColor: currentColor,
-                      //   onColorChanged: changeColor,
-                      // ),
                     ),
                     actions: <Widget>[
                       FlatButton(
                         child: const Text('Got it'),
                         onPressed: () {
                           Navigator.of(context).pop();
-                        },
+                          },
                       ),
                     ],
                   ),
@@ -712,47 +703,34 @@ class Selection extends StatelessWidget {
             ListTile(
               leading: Icon(Icons.phone),
               onTap: () {
-
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (context) => MyHomePage()),
+                      builder: (context) => MyHomePage(),
+                  ),
                 );
-
-
-
-
-
-
               },
               title: Text('Image'),
             ),
             ListTile(
               leading: Icon(Icons.phone),
               onTap: () {
-
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (context) => ShowLoading()),
+                      builder: (context) => ShowLoading(),
+                  ),
                 );
-
-
-
-
-
-
-
               },
               title: Text('Next'),
             ),
-
           ],
         ),
       ),
     );
   }
 }
+
 class MyHomePage extends StatefulWidget {
   @override
   _MyHomePageState createState() => _MyHomePageState();
@@ -763,7 +741,6 @@ class _MyHomePageState extends State<MyHomePage> {
 
   Future getImage() async {
     var image = await ImagePicker.pickImage(source: ImageSource.camera);
-
     setState(() {
       _image = image;
     });
@@ -789,7 +766,6 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 }
 
-
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -808,49 +784,49 @@ class ShowLoading extends StatelessWidget {
           title: Text(''),
         ),
         body:
-
         Center(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Text("Converting to SmartSneak", style: TextStyle(color: Colors.white, fontSize: 25, fontWeight: FontWeight.bold),),
+            Text(
+              "Converting to SmartSneak",
+              style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 25,
+                  fontWeight: FontWeight.bold,
+              ),
+            ),
             Container(
               color: Colors.lightBlue,
               child: Center(
-                child: Loading(indicator: BallPulseIndicator(), size: 100.0),
+                child: Loading(
+                    indicator: BallPulseIndicator(),
+                    size: 100.0,
+                ),
               ),
             ),
           FlatButton(
               onPressed: () {
-
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (context) => ImageRoute()),
+                      builder: (context) => ImageRoute(),
+                  ),
                 );
-
-
               },
               child: Text(
                 "SmartSneaks",
                 style: TextStyle(
                     color: Colors.lightBlue,
                     fontSize: 50.0,
-                    fontFamily: "Roboto"),
+                    fontFamily: "Roboto",
+                ),
               )),
-
-
-
           ],
-
-        )
-
-
-    ));}
-
-
-
+        ))
+    );
+  }
 }
 
 class ImageRoute extends StatelessWidget {
@@ -866,24 +842,24 @@ class ImageRoute extends StatelessWidget {
             Navigator.push(
               context,
               MaterialPageRoute(
-                  builder: (context) => PurchasePage()),
+                  builder: (context) => PurchasePage(),
+              ),
             );
           },
           child: new Image(
               width: 605.0,
               height: 600.0,
               fit: BoxFit.fill,
-              image: new AssetImage('assets/img/shoes.png')),
+              image: new AssetImage('assets/img/shoes.png'),
+          ),
         ),
-        ),
-      );
-
+      ),
+    );
   }
 }
 
 class PurchasePage extends StatelessWidget {
   String dropdownValue = 'One';
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -895,19 +871,16 @@ class PurchasePage extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-
         Image(
               width: 300.0,
               height: 300.0,
               fit: BoxFit.fill,
-              image: new AssetImage('assets/img/ocean_shoe.png')),
+              image: new AssetImage('assets/img/ocean_shoe.png'),
+        ),
         Text('Select Your Size'),
         DropdownButton<String>(
           value: dropdownValue,
-          onChanged: (String newValue) {
-              dropdownValue = newValue;
-
-          },
+          onChanged: (String newValue) {dropdownValue = newValue;},
           items: <String>['One', 'Two', 'Free', 'Four']
               .map<DropdownMenuItem<String>>((String value) {
             return DropdownMenuItem<String>(
@@ -930,7 +903,7 @@ class PurchasePage extends StatelessWidget {
                   content: SingleChildScrollView(
                   child: ListBody(
                   children: <Widget>[
-                  Text('Card Number'),
+                    Text('Card Number'),
                     TextField(),
                     Text('CVV'),
                     TextField(),
@@ -939,36 +912,24 @@ class PurchasePage extends StatelessWidget {
                     Text('Exp Date'),
                     TextField(),
                     RaisedButton(
-                      child: Text("Submit"),
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => LoginPage()),
-                        );
-
-                      })
-
+                        child: Text("Submit"),
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => LoginPage(),
+                            ),
+                          );
+                        })
                   ],
                   ),
-                  )
-//                  ,
-
-
-                  // Perform some action
+                  ),
                   );},
-    );} ),
-
-
-            ]),
-
-
-
-
-));
-
-
-
+                  );}),
+            ],
+        ),
+      )
+    );
   }
 }
 
